@@ -24,4 +24,12 @@
  ```
 
  ## Ekran Goruntusu
- ![Uygulama Görünümü](assets/screenshot.png)
+ ![Uygulama Görünümü(1)](assets/screenshot.png)
+ ![Lighthouse Raporu](src/assets/Lighthouse.png)
+
+ ## Özellikler
+  -Semantik HTML5 (header, nav, main, section, footer)
+  -Accessibility iyileştirmeleri
+  -Skip link ile klavye navigasyonu
+  -Lighthouse ile erişilebilirlik testi
+  -Feature branch + çoklu commit akışı
