@@ -1,6 +1,6 @@
 import appointmentImg from "./assets/AppointmentSystem.png"
 import taskImg from "./assets/TaskManagement.png"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 function App() {
   const formRef = useRef<HTMLFormElement | null>(null)
@@ -63,6 +63,9 @@ function App() {
     alert("Form başarıyla gönderildi (demo).")
     formRef.current?.reset()
   }
+  const [activeProject, setActiveProject] = useState<null | "appointment" | "task">(null)
+
+  const closeModal = () => setActiveProject(null)
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
@@ -127,6 +130,9 @@ function App() {
                 loading="lazy"
               />
               <p>ASP.NET Core MVC ile geliştirilmiş CRUD tabanlı randevu uygulaması.</p>
+              <button type="button" onClick={() => setActiveProject("appointment")}>
+                Detay
+              </button>
             </article>
 
             <article>
@@ -137,6 +143,9 @@ function App() {
                 loading="lazy"
               />
               <p>ASP.NET Core + LocalDB ile görev yönetimi ve takibi uygulaması.</p>
+              <button type="button" onClick={() => setActiveProject("task")}>
+                Detay
+              </button>
             </article>
           </div>
         </section>
@@ -206,7 +215,35 @@ function App() {
             </fieldset>
           </form>
         </section>
+        {activeProject && (
+          <div
+            className="modal-overlay"
+            role="presentation"
+            onClick={closeModal}
+          >
+            <div
+              className="modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-title"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 id="modal-title">
+                {activeProject === "appointment" ? "Randevu Sistemi" : "Task Management"}
+              </h3>
 
+              <p>
+                {activeProject === "appointment"
+                  ? "Bu projede kullanıcıların randevu oluşturma, güncelleme, silme ve listeleme işlemleri yapılır. ASP.NET Core MVC + CRUD mimarisi."
+                  : "Bu projede görev oluşturma, tamamlama, silme ve filtreleme gibi işlemler yapılır. ASP.NET Core + LocalDB ile geliştirildi."}
+              </p>
+
+              <button type="button" onClick={closeModal}>
+                Kapat
+              </button>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Landmark role */}
