@@ -1,6 +1,6 @@
 import appointmentImg from "./assets/AppointmentSystem.png"
 import taskImg from "./assets/TaskManagement.png"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 
 function App() {
   const formRef = useRef<HTMLFormElement | null>(null)
@@ -66,6 +66,16 @@ function App() {
   const [activeProject, setActiveProject] = useState<null | "appointment" | "task">(null)
 
   const closeModal = () => setActiveProject(null)
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && activeProject) {
+        closeModal()
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [activeProject])
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
