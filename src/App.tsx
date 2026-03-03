@@ -76,6 +76,13 @@ function App() {
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [activeProject])
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null)
+  useEffect(() => {
+    if (activeProject) {
+      // modal DOM'a basıldıktan sonra focus
+      setTimeout(() => closeBtnRef.current?.focus(), 0)
+    }
+  }, [activeProject])
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
@@ -254,7 +261,7 @@ function App() {
                   : "Bu projede görev oluşturma, tamamlama, silme ve filtreleme gibi işlemler yapılır. ASP.NET Core + LocalDB ile geliştirildi."}
               </p>
 
-              <button type="button" onClick={closeModal}>
+              <button type="button" onClick={closeModal} ref={closeBtnRef}>
                 Kapat
               </button>
             </div>
