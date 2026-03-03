@@ -33,3 +33,17 @@
   -Skip link ile klavye navigasyonu
   -Lighthouse ile erişilebilirlik testi
   -Feature branch + çoklu commit akışı
+
+  ## LAB-3 Notları
+
+### Yapılanlar
+- Design tokens (CSS değişkenleri) eklendi (`src/styles/tokens.css`)
+- Responsive proje kartları (grid) uygulandı
+- Navigasyon küçük ekranlara uyumlu hale getirildi
+- İletişim formu için erişilebilir istemci tarafı doğrulama eklendi (hata mesajları + aria-invalid)
+- Projeler için erişilebilir modal eklendi (buton ile açma, dışarı tıklayınca kapama, ESC ile kapama, modal açılınca focus yönetimi)
+
+### Çalıştırma
+```bash
+npm install
+npm run dev
