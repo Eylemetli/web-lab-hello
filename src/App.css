@@ -1,31 +1,60 @@
 @import "./styles/tokens.css";
 
-/* Genel layout */
+/* =========================
+   Global safety / anti-overflow
+   ========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Uzun kelimeler/URL'ler taşma yapmasın */
+* {
+  min-width: 0;
+}
+
+html,
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  /* modern */
+  overflow-x: hidden;
+  /* fallback */
+}
+
+body {
   font-family: var(--font-sans);
   line-height: 1.6;
   background: var(--color-bg);
   color: var(--color-text);
 }
 
+/* Root container */
 #root {
-  max-width: 1000px;
+  width: min(1000px, 100%);
   margin: 0 auto;
   padding: var(--space-lg);
 }
 
-/* Header */
+/* =========================
+   Header / Nav
+   ========================= */
 header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: var(--space-xl);
 }
 
 nav ul {
   list-style: none;
   padding: 0;
+  margin: 0;
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: var(--space-md);
   justify-content: center;
 }
 
@@ -45,35 +74,88 @@ nav a:focus-visible {
   outline-offset: 3px;
 }
 
-/* Section spacing */
+@media (max-width: 480px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* =========================
+   Sections
+   ========================= */
 section {
-  margin-bottom: 48px;
+  margin-bottom: var(--space-2xl);
 }
 
-/* Projeler */
-article {
-  margin-bottom: 24px;
+p,
+li,
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
+  /* uzun kelime/link taşmasını engeller */
 }
 
-img {
-  max-width: 350px;
+/* =========================
+   Projects grid
+   ========================= */
+.projects-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.projects-grid article {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  /* görsel vb. dışarı taşmasın */
+}
+
+.projects-grid img {
   width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
-/* Footer */
+/* Eğer img'ler yine de taşarsa (çok nadir), bu garanti eder */
+.projects-grid article,
+.projects-grid img {
+  min-width: 0;
+}
+
+/* =========================
+   Footer
+   ========================= */
 footer {
   text-align: center;
-  margin-top: 40px;
+  margin-top: var(--space-xl);
   font-size: 14px;
   opacity: 0.8;
 }
 
-/* Skip link (a11y için zorunlu) */
+/* =========================
+   Skip link (a11y)
+   ========================= */
 .skip-link {
   position: absolute;
   left: -9999px;
+  top: 0;
 }
 
 .skip-link:focus {
@@ -85,9 +167,9 @@ footer {
   z-index: 1000;
 }
 
-/* ===== Accessibility (LAB gereksinimi) ===== */
-
-/* Focus göstergesi – Lighthouse için önemli */
+/* =========================
+   Accessibility
+   ========================= */
 :focus {
   outline: 2px solid var(--color-secondary);
   outline-offset: 2px;
