@@ -143,7 +143,13 @@ function App() {
                 loading="lazy"
               />
               <p>ASP.NET Core + LocalDB ile görev yönetimi ve takibi uygulaması.</p>
-              <button type="button" onClick={() => setActiveProject("task")}>
+              <button
+                type="button"
+                onClick={() => {
+
+                  setActiveProject("task")
+                }}
+              >
                 Detay
               </button>
             </article>
@@ -221,6 +227,31 @@ function App() {
             role="presentation"
             onClick={closeModal}
           >
+            <div
+              className="modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-title"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 id="modal-title">
+                {activeProject === "appointment" ? "Randevu Sistemi" : "Task Management"}
+              </h3>
+
+              <p>
+                {activeProject === "appointment"
+                  ? "Bu projede kullanıcıların randevu oluşturma, güncelleme, silme ve listeleme işlemleri yapılır. ASP.NET Core MVC + CRUD mimarisi."
+                  : "Bu projede görev oluşturma, tamamlama, silme ve filtreleme gibi işlemler yapılır. ASP.NET Core + LocalDB ile geliştirildi."}
+              </p>
+
+              <button type="button" onClick={closeModal}>
+                Kapat
+              </button>
+            </div>
+          </div>
+        )}
+        {activeProject && (
+          <div className="modal-overlay" role="presentation" onClick={closeModal}>
             <div
               className="modal"
               role="dialog"
