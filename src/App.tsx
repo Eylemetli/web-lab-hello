@@ -1,7 +1,68 @@
 import appointmentImg from "./assets/AppointmentSystem.png"
 import taskImg from "./assets/TaskManagement.png"
+import { useRef } from "react"
 
 function App() {
+  const formRef = useRef<HTMLFormElement | null>(null)
+
+  const setError = (id: string, message: string) => {
+    const el = document.getElementById(id)
+    if (el) el.textContent = message
+  }
+
+  const clearErrors = () => {
+    setError("name-error", "")
+    setError("email-error", "")
+    setError("subject-error", "")
+    setError("message-error", "")
+
+      ;["name", "email", "subject", "message"].forEach((fieldId) => {
+        const input = document.getElementById(fieldId)
+        if (input) input.setAttribute("aria-invalid", "false")
+      })
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    clearErrors()
+
+    const name = (document.getElementById("name") as HTMLInputElement | null)?.value?.trim() ?? ""
+    const email = (document.getElementById("email") as HTMLInputElement | null)?.value?.trim() ?? ""
+    const subject = (document.getElementById("subject") as HTMLSelectElement | null)?.value ?? ""
+    const message = (document.getElementById("message") as HTMLTextAreaElement | null)?.value?.trim() ?? ""
+
+    let hasError = false
+
+    if (name.length < 2) {
+      setError("name-error", "Ad Soyad en az 2 karakter olmalıdır.")
+      document.getElementById("name")?.setAttribute("aria-invalid", "true")
+      hasError = true
+    }
+
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    if (!emailOk) {
+      setError("email-error", "Lütfen geçerli bir e-posta adresi giriniz.")
+      document.getElementById("email")?.setAttribute("aria-invalid", "true")
+      hasError = true
+    }
+
+    if (!subject) {
+      setError("subject-error", "Lütfen bir konu seçiniz.")
+      document.getElementById("subject")?.setAttribute("aria-invalid", "true")
+      hasError = true
+    }
+
+    if (message.length < 10) {
+      setError("message-error", "Mesaj en az 10 karakter olmalıdır.")
+      document.getElementById("message")?.setAttribute("aria-invalid", "true")
+      hasError = true
+    }
+
+    if (hasError) return
+
+    alert("Form başarıyla gönderildi (demo).")
+    formRef.current?.reset()
+  }
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
@@ -83,7 +144,7 @@ function App() {
         <section id="iletisim">
           <h2>İletişim</h2>
 
-          <form action="#" method="POST" noValidate>
+          <form ref={formRef} action="#" method="POST" noValidate onSubmit={handleSubmit}>
             <fieldset>
               <legend>İletişim Formu</legend>
 
