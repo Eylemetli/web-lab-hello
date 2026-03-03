@@ -1,14 +1,18 @@
+@import "./styles/tokens.css";
+
 /* Genel layout */
 body {
   margin: 0;
-  font-family: system-ui, Arial, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 #root {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 24px;
+  padding: var(--space-lg);
 }
 
 /* Header */
@@ -28,6 +32,17 @@ nav ul {
 nav a {
   text-decoration: none;
   font-weight: 600;
+  color: var(--color-primary);
+  transition: color var(--transition-fast);
+}
+
+nav a:hover {
+  color: var(--color-secondary);
+}
+
+nav a:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
 }
 
 /* Section spacing */
@@ -43,7 +58,8 @@ article {
 img {
   max-width: 350px;
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Footer */
@@ -73,6 +89,6 @@ footer {
 
 /* Focus göstergesi – Lighthouse için önemli */
 :focus {
-  outline: 2px solid #2563EB;
+  outline: 2px solid var(--color-secondary);
   outline-offset: 2px;
 }

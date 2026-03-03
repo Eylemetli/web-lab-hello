@@ -57,29 +57,27 @@ function App() {
         <section id="projeler">
           <h2>Projelerim</h2>
 
-          <article>
-            <h3>Randevu Sistemi</h3>
-            <img
-              src={appointmentImg}
-              alt="Randevu yönetim sistemi ekran görüntüsü"
-              loading="lazy"
-            />
-            <p>
-              ASP.NET Core MVC ile geliştirilmiş CRUD tabanlı randevu uygulaması.
-            </p>
-          </article>
+          <div className="projects-grid">
+            <article>
+              <h3>Randevu Sistemi</h3>
+              <img
+                src={appointmentImg}
+                alt="Randevu yönetim sistemi ekran görüntüsü"
+                loading="lazy"
+              />
+              <p>ASP.NET Core MVC ile geliştirilmiş CRUD tabanlı randevu uygulaması.</p>
+            </article>
 
-          <article>
-            <h3>Task Management</h3>
-            <img
-              src={taskImg}
-              alt="Task yönetim sistemi ana sayfa ekranı"
-              loading="lazy"
-            />
-            <p>
-              ASP.NET Core + LocalDB ile görev yönetimi ve takibi uygulaması.
-            </p>
-          </article>
+            <article>
+              <h3>Task Management</h3>
+              <img
+                src={taskImg}
+                alt="Task yönetim sistemi ana sayfa ekranı"
+                loading="lazy"
+              />
+              <p>ASP.NET Core + LocalDB ile görev yönetimi ve takibi uygulaması.</p>
+            </article>
+          </div>
         </section>
 
         <section id="iletisim">
