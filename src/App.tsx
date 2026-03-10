@@ -1,6 +1,7 @@
 import appointmentImg from "./assets/AppointmentSystem.png"
 import taskImg from "./assets/TaskManagement.png"
 import { useRef, useState, useEffect } from "react"
+import Button from "./components/Button"
 
 function App() {
   const formRef = useRef<HTMLFormElement | null>(null)
@@ -286,9 +287,9 @@ function App() {
                   : "Bu projede görev oluşturma, tamamlama, silme ve filtreleme gibi işlemler yapılır. ASP.NET Core + LocalDB ile geliştirildi."}
               </p>
 
-              <button type="button" onClick={closeModal}>
+              <Button type="button" onClick={closeModal} ref={closeBtnRef} variant="outline">
                 Kapat
-              </button>
+              </Button>
             </div>
           </div>
         )}
