@@ -148,9 +148,13 @@ function App() {
                 loading="lazy"
               />
               <p>ASP.NET Core MVC ile geliştirilmiş CRUD tabanlı randevu uygulaması.</p>
-              <button type="button" onClick={() => setActiveProject("appointment")}>
+              <Button
+                type="button"
+                onClick={() => setActiveProject("appointment")}
+                variant="primary"
+              >
                 Detay
-              </button>
+              </Button>
             </article>
 
             <article>
@@ -161,15 +165,13 @@ function App() {
                 loading="lazy"
               />
               <p>ASP.NET Core + LocalDB ile görev yönetimi ve takibi uygulaması.</p>
-              <button
+              <Button
                 type="button"
-                onClick={() => {
-
-                  setActiveProject("task")
-                }}
+                onClick={() => setActiveProject("task")}
+                variant="secondary"
               >
                 Detay
-              </button>
+              </Button>
             </article>
           </div>
         </section>
@@ -241,12 +243,12 @@ function App() {
         </section>
         {activeProject && (
           <div
-            className="modal-overlay"
+            className="fixed inset-0 bg-black/50 grid place-items-center p-6"
             role="presentation"
             onClick={closeModal}
           >
             <div
-              className="modal"
+              className="w-[min(520px,100%)] bg-white text-slate-900 rounded-2xl p-6 shadow-lg"
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-title"

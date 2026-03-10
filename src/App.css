@@ -186,21 +186,3 @@ button {
 button:hover {
   border-color: var(--color-secondary);
 }
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: grid;
-  place-items: center;
-  padding: var(--space-lg);
-}
-
-.modal {
-  width: min(520px, 100%);
-  background: var(--color-bg);
-  color: var(--color-text);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  box-shadow: var(--shadow-lg);
-}
