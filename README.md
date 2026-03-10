@@ -43,6 +43,13 @@
 - İletişim formu için erişilebilir istemci tarafı doğrulama eklendi (hata mesajları + aria-invalid)
 - Projeler için erişilebilir modal eklendi (buton ile açma, dışarı tıklayınca kapama, ESC ile kapama, modal açılınca focus yönetimi)
 
+## LAB-4 Notları
+
+- Tailwind CSS v4 kuruldu ve Vite plugin ile yapılandırıldı.
+- `src/index.css` içinde `@theme` ile renk tokenları tanımlandı (primary/secondary/accent/surface/muted).
+- Tekrar kullanılabilir `Button` bileşeni eklendi (`src/components/Button.tsx`) ve varyantlı kullanım yapıldı.
+- Modal stilleri Tailwind utility class’larıyla düzenlendi.
+
 ### Çalıştırma
 ```bash
 npm install
