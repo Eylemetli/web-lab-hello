@@ -90,7 +90,7 @@ function App() {
         Ana içeriğe atla
       </a>
 
-      <header>
+      <header className="bg-primary text-white p-6 rounded-lg">
         <h1>Eylem Etli - Kişisel Portföy</h1>
 
         {/* ARIA label navigasyon için */}
