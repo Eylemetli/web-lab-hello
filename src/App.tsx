@@ -63,26 +63,26 @@ function App() {
     alert("Form başarıyla gönderildi (demo).")
     formRef.current?.reset()
   }
-  const [activeProject, setActiveProject] = useState<null | "appointment" | "task">(null)
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(null)
 
-  const closeModal = () => setActiveProject(null)
+  const closeModal = () => setActiveProjectId(null)
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && activeProject) {
+      if (e.key === "Escape" && activeProjectId) {
         closeModal()
       }
     }
 
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
-  }, [activeProject])
+  }, [activeProjectId])
   const closeBtnRef = useRef<HTMLButtonElement | null>(null)
   useEffect(() => {
-    if (activeProject) {
+    if (activeProjectId) {
       // modal DOM'a basıldıktan sonra focus
       setTimeout(() => closeBtnRef.current?.focus(), 0)
     }
-  }, [activeProject])
+  }, [activeProjectId])
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
@@ -139,39 +139,34 @@ function App() {
           <h2>Projelerim</h2>
 
           <div className="projects-grid">
-            <article>
-              <h3>Randevu Sistemi</h3>
-              <img
-                src={appointmentImg}
-                alt="Randevu yönetim sistemi ekran görüntüsü"
-                loading="lazy"
-              />
-              <p>ASP.NET Core MVC ile geliştirilmiş CRUD tabanlı randevu uygulaması.</p>
-              <Button
-                type="button"
-                onClick={() => setActiveProject("appointment")}
-                variant="primary"
-              >
-                Detay
-              </Button>
-            </article>
+            {projects.map((p) => (
+              <article key={p.id}>
+                <h3>{p.title}</h3>
 
-            <article>
-              <h3>Task Management</h3>
-              <img
-                src={taskImg}
-                alt="Task yönetim sistemi ana sayfa ekranı"
-                loading="lazy"
-              />
-              <p>ASP.NET Core + LocalDB ile görev yönetimi ve takibi uygulaması.</p>
-              <Button
-                type="button"
-                onClick={() => setActiveProject("task")}
-                variant="secondary"
-              >
-                Detay
-              </Button>
-            </article>
+                {p.imageSrc && (
+                  <img src={p.imageSrc} alt={`${p.title} ekran görüntüsü`} loading="lazy" />
+                )}
+
+                <p>{p.description}</p>
+
+                <div className="flex gap-3 flex-wrap">
+                  <Button type="button" onClick={() => setActiveProjectId(p.id)} variant="primary">
+                    Detay
+                  </Button>
+
+                  {p.repoUrl && (
+                    <a
+                      href={p.repoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline font-semibold"
+                    >
+                      Repo
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
@@ -240,7 +235,7 @@ function App() {
             </fieldset>
           </form>
         </section>
-        {activeProject && (
+        {activeProjectId && (
           <div
             className="fixed inset-0 bg-black/50 grid place-items-center p-6"
             role="presentation"
@@ -254,11 +249,11 @@ function App() {
               onClick={(e) => e.stopPropagation()}
             >
               <h3 id="modal-title">
-                {activeProject === "appointment" ? "Randevu Sistemi" : "Task Management"}
+                {activeProjectId === "appointment" ? "Randevu Sistemi" : "Task Management"}
               </h3>
 
               <p>
-                {activeProject === "appointment"
+                {activeProjectId === "appointment"
                   ? "Bu projede kullanıcıların randevu oluşturma, güncelleme, silme ve listeleme işlemleri yapılır. ASP.NET Core MVC + CRUD mimarisi."
                   : "Bu projede görev oluşturma, tamamlama, silme ve filtreleme gibi işlemler yapılır. ASP.NET Core + LocalDB ile geliştirildi."}
               </p>
@@ -269,7 +264,7 @@ function App() {
             </div>
           </div>
         )}
-        {activeProject && (
+        {activeProjectId && (
           <div className="modal-overlay" role="presentation" onClick={closeModal}>
             <div
               className="modal"
@@ -279,11 +274,11 @@ function App() {
               onClick={(e) => e.stopPropagation()}
             >
               <h3 id="modal-title">
-                {activeProject === "appointment" ? "Randevu Sistemi" : "Task Management"}
+                {activeProjectId === "appointment" ? "Randevu Sistemi" : "Task Management"}
               </h3>
 
               <p>
-                {activeProject === "appointment"
+                {activeProjectId === "appointment"
                   ? "Bu projede kullanıcıların randevu oluşturma, güncelleme, silme ve listeleme işlemleri yapılır. ASP.NET Core MVC + CRUD mimarisi."
                   : "Bu projede görev oluşturma, tamamlama, silme ve filtreleme gibi işlemler yapılır. ASP.NET Core + LocalDB ile geliştirildi."}
               </p>
