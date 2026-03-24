@@ -1,5 +1,4 @@
-import appointmentImg from "./assets/AppointmentSystem.png"
-import taskImg from "./assets/TaskManagement.png"
+import { projects } from "./data/projects"
 import { useRef, useState, useEffect } from "react"
 import Button from "./components/Button"
 
