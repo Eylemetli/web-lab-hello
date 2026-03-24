@@ -1,6 +1,7 @@
 import { projects } from "./data/projects"
 import { useRef, useState, useEffect } from "react"
 import Button from "./components/Button"
+import type { FilterState } from "./types/project"
 
 function App() {
   const formRef = useRef<HTMLFormElement | null>(null)
@@ -84,9 +85,18 @@ function App() {
     }
   }, [activeProjectId])
 
+
   const activeProject = activeProjectId
     ? projects.find((p) => p.id === activeProjectId)
     : null
+
+  const [filters, setFilters] = useState<FilterState>({
+    query: "",
+    category: "all",
+    sortField: "title",
+    sortOrder: "asc",
+  })
+
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
