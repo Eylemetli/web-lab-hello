@@ -58,6 +58,9 @@
 - Filtreleme/sıralama mantığı `visibleProjects` ile tek yerde toplandı.
 - Seçim kontrollerinde `any` cast kaldırıldı (typed handlers).
 - Modal içeriği aktif proje id’si üzerinden `projects` datasından çekilerek dinamik hale getirildi.
+### Ek (Refactor)
+- Proje kartı görünümü `ProjectCard` bileşenine ayrıldı.
+- Filtre/sıralama arayüzü `ProjectsFilters` bileşenine ayrıldı.
 
 ### Çalıştırma
 ```bash
