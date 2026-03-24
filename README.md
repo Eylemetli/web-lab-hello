@@ -50,7 +50,17 @@
 - Tekrar kullanılabilir `Button` bileşeni eklendi (`src/components/Button.tsx`) ve varyantlı kullanım yapıldı.
 - Modal stilleri Tailwind utility class’larıyla düzenlendi.
 
+##  LAB-5 Notları
+
+- Proje verisi TypeScript tipleriyle modellendi (`src/types/project.ts`).
+- Projeler ayrı bir data modülüne taşındı (`src/data/projects.ts`) ve arayüzde `map` ile dinamik render edildi.
+- Arama, kategori filtresi ve sıralama için `FilterState` ile state yönetimi eklendi.
+- Filtreleme/sıralama mantığı `visibleProjects` ile tek yerde toplandı.
+- Seçim kontrollerinde `any` cast kaldırıldı (typed handlers).
+- Modal içeriği aktif proje id’si üzerinden `projects` datasından çekilerek dinamik hale getirildi.
+
 ### Çalıştırma
 ```bash
 npm install
 npm run dev
+
