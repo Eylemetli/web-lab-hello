@@ -83,6 +83,10 @@ function App() {
       setTimeout(() => closeBtnRef.current?.focus(), 0)
     }
   }, [activeProjectId])
+
+  const activeProject = activeProjectId
+    ? projects.find((p) => p.id === activeProjectId)
+    : null
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
@@ -235,7 +239,7 @@ function App() {
             </fieldset>
           </form>
         </section>
-        {activeProjectId && (
+        {activeProject && (
           <div
             className="fixed inset-0 bg-black/50 grid place-items-center p-6"
             role="presentation"
@@ -248,47 +252,35 @@ function App() {
               aria-labelledby="modal-title"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 id="modal-title">
-                {activeProjectId === "appointment" ? "Randevu Sistemi" : "Task Management"}
+              <h3 id="modal-title" className="text-xl font-bold">
+                {activeProject.title}
               </h3>
 
-              <p>
-                {activeProjectId === "appointment"
-                  ? "Bu projede kullanıcıların randevu oluşturma, güncelleme, silme ve listeleme işlemleri yapılır. ASP.NET Core MVC + CRUD mimarisi."
-                  : "Bu projede görev oluşturma, tamamlama, silme ve filtreleme gibi işlemler yapılır. ASP.NET Core + LocalDB ile geliştirildi."}
-              </p>
+              {activeProject.imageSrc && (
+                <img
+                  src={activeProject.imageSrc}
+                  alt={`${activeProject.title} ekran görüntüsü`}
+                  className="mt-4 w-full rounded-lg"
+                  loading="lazy"
+                />
+              )}
 
-              <button type="button" onClick={closeModal} ref={closeBtnRef}>
-                Kapat
-              </button>
+              <p className="mt-4">{activeProject.description}</p>
+
+              <div className="mt-6 flex justify-end">
+                <Button
+                  type="button"
+                  onClick={closeModal}
+                  ref={closeBtnRef}
+                  variant="outline"
+                >
+                  Kapat
+                </Button>
+              </div>
             </div>
           </div>
         )}
-        {activeProjectId && (
-          <div className="modal-overlay" role="presentation" onClick={closeModal}>
-            <div
-              className="modal"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="modal-title"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 id="modal-title">
-                {activeProjectId === "appointment" ? "Randevu Sistemi" : "Task Management"}
-              </h3>
 
-              <p>
-                {activeProjectId === "appointment"
-                  ? "Bu projede kullanıcıların randevu oluşturma, güncelleme, silme ve listeleme işlemleri yapılır. ASP.NET Core MVC + CRUD mimarisi."
-                  : "Bu projede görev oluşturma, tamamlama, silme ve filtreleme gibi işlemler yapılır. ASP.NET Core + LocalDB ile geliştirildi."}
-              </p>
-
-              <Button type="button" onClick={closeModal} ref={closeBtnRef} variant="outline">
-                Kapat
-              </Button>
-            </div>
-          </div>
-        )}
       </main>
 
       {/* Landmark role */}
