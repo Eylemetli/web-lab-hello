@@ -97,6 +97,28 @@ function App() {
     sortOrder: "asc",
   })
 
+  const visibleProjects = projects
+    .filter((p) => {
+      const q = filters.query.trim().toLowerCase()
+      const matchesQuery =
+        q.length === 0 ||
+        p.title.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q)
+
+      const matchesCategory =
+        filters.category === "all" || p.category === filters.category
+
+      return matchesQuery && matchesCategory
+    })
+    .sort((a, b) => {
+      const aVal = a[filters.sortField].toLowerCase()
+      const bVal = b[filters.sortField].toLowerCase()
+
+      if (aVal < bVal) return filters.sortOrder === "asc" ? -1 : 1
+      if (aVal > bVal) return filters.sortOrder === "asc" ? 1 : -1
+      return 0
+    })
+
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
@@ -152,6 +174,7 @@ function App() {
         <section id="projeler">
           <h2>Projelerim</h2>
 
+          {/* Filtre UI */}
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex flex-col gap-2">
               <label htmlFor="project-search" className="font-semibold">
@@ -218,19 +241,29 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="projects-grid">
-            {projects.map((p) => (
+
+          {/* Liste */}
+          <div className="projects-grid mt-6">
+            {visibleProjects.map((p) => (
               <article key={p.id}>
                 <h3>{p.title}</h3>
 
                 {p.imageSrc && (
-                  <img src={p.imageSrc} alt={`${p.title} ekran görüntüsü`} loading="lazy" />
+                  <img
+                    src={p.imageSrc}
+                    alt={`${p.title} ekran görüntüsü`}
+                    loading="lazy"
+                  />
                 )}
 
                 <p>{p.description}</p>
 
                 <div className="flex gap-3 flex-wrap">
-                  <Button type="button" onClick={() => setActiveProjectId(p.id)} variant="primary">
+                  <Button
+                    type="button"
+                    onClick={() => setActiveProjectId(p.id)}
+                    variant="primary"
+                  >
                     Detay
                   </Button>
 
@@ -248,6 +281,11 @@ function App() {
               </article>
             ))}
           </div>
+
+          {/* Empty state: map dışı */}
+          {visibleProjects.length === 0 && (
+            <p className="mt-4 text-slate-600">Eşleşen proje bulunamadı.</p>
+          )}
         </section>
 
         <section id="iletisim">
@@ -315,54 +353,56 @@ function App() {
             </fieldset>
           </form>
         </section>
-        {activeProject && (
-          <div
-            className="fixed inset-0 bg-black/50 grid place-items-center p-6"
-            role="presentation"
-            onClick={closeModal}
-          >
+        {
+          activeProject && (
             <div
-              className="w-[min(520px,100%)] bg-white text-slate-900 rounded-2xl p-6 shadow-lg"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="modal-title"
-              onClick={(e) => e.stopPropagation()}
+              className="fixed inset-0 bg-black/50 grid place-items-center p-6"
+              role="presentation"
+              onClick={closeModal}
             >
-              <h3 id="modal-title" className="text-xl font-bold">
-                {activeProject.title}
-              </h3>
+              <div
+                className="w-[min(520px,100%)] bg-white text-slate-900 rounded-2xl p-6 shadow-lg"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-title"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 id="modal-title" className="text-xl font-bold">
+                  {activeProject.title}
+                </h3>
 
-              {activeProject.imageSrc && (
-                <img
-                  src={activeProject.imageSrc}
-                  alt={`${activeProject.title} ekran görüntüsü`}
-                  className="mt-4 w-full rounded-lg"
-                  loading="lazy"
-                />
-              )}
+                {activeProject.imageSrc && (
+                  <img
+                    src={activeProject.imageSrc}
+                    alt={`${activeProject.title} ekran görüntüsü`}
+                    className="mt-4 w-full rounded-lg"
+                    loading="lazy"
+                  />
+                )}
 
-              <p className="mt-4">{activeProject.description}</p>
+                <p className="mt-4">{activeProject.description}</p>
 
-              <div className="mt-6 flex justify-end">
-                <Button
-                  type="button"
-                  onClick={closeModal}
-                  ref={closeBtnRef}
-                  variant="outline"
-                >
-                  Kapat
-                </Button>
+                <div className="mt-6 flex justify-end">
+                  <Button
+                    type="button"
+                    onClick={closeModal}
+                    ref={closeBtnRef}
+                    variant="outline"
+                  >
+                    Kapat
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )
+        }
 
-      </main>
+      </main >
 
       {/* Landmark role */}
-      <footer role="contentinfo">
+      < footer role="contentinfo" >
         <p>© 2026 Eylem Etli. Tüm hakları saklıdır.</p>
-      </footer>
+      </footer >
     </>
   )
 }
