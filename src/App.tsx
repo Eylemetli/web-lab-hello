@@ -2,6 +2,8 @@ import { projects } from "./data/projects"
 import { useRef, useState, useEffect } from "react"
 import Button from "./components/Button"
 import type { FilterState } from "./types/project"
+import type { Category, SortField, SortOrder } from "./types/project"
+import ProjectCard from "./components/ProjectCard"
 
 function App() {
   const formRef = useRef<HTMLFormElement | null>(null)
@@ -118,7 +120,14 @@ function App() {
       if (aVal > bVal) return filters.sortOrder === "asc" ? 1 : -1
       return 0
     })
+  const toCategory = (v: string): FilterState["category"] =>
+    v === "all" ? "all" : (v as Category)
 
+  const toSortField = (v: string): SortField =>
+    v === "title" || v === "category" ? v : "title"
+
+  const toSortOrder = (v: string): SortOrder =>
+    v === "asc" || v === "desc" ? v : "asc"
   return (
     <>
       {/* Skip link (klavye kullanıcıları için) */}
@@ -198,7 +207,7 @@ function App() {
                 <select
                   id="category"
                   value={filters.category}
-                  onChange={(e) => setFilters((f) => ({ ...f, category: e.target.value as any }))}
+                  onChange={(e) => setFilters((f) => ({ ...f, category: toCategory(e.target.value) }))}
                   className="border border-slate-300 rounded-md px-3 py-2"
                 >
                   <option value="all">Tümü</option>
@@ -217,7 +226,7 @@ function App() {
                 <select
                   id="sortField"
                   value={filters.sortField}
-                  onChange={(e) => setFilters((f) => ({ ...f, sortField: e.target.value as any }))}
+                  onChange={(e) => setFilters((f) => ({ ...f, sortField: toSortField(e.target.value) }))}
                   className="border border-slate-300 rounded-md px-3 py-2"
                 >
                   <option value="title">Başlık</option>
@@ -232,7 +241,7 @@ function App() {
                 <select
                   id="sortOrder"
                   value={filters.sortOrder}
-                  onChange={(e) => setFilters((f) => ({ ...f, sortOrder: e.target.value as any }))}
+                  onChange={(e) => setFilters((f) => ({ ...f, sortOrder: toSortOrder(e.target.value) }))}
                   className="border border-slate-300 rounded-md px-3 py-2"
                 >
                   <option value="asc">A-Z</option>
@@ -245,40 +254,7 @@ function App() {
           {/* Liste */}
           <div className="projects-grid mt-6">
             {visibleProjects.map((p) => (
-              <article key={p.id}>
-                <h3>{p.title}</h3>
-
-                {p.imageSrc && (
-                  <img
-                    src={p.imageSrc}
-                    alt={`${p.title} ekran görüntüsü`}
-                    loading="lazy"
-                  />
-                )}
-
-                <p>{p.description}</p>
-
-                <div className="flex gap-3 flex-wrap">
-                  <Button
-                    type="button"
-                    onClick={() => setActiveProjectId(p.id)}
-                    variant="primary"
-                  >
-                    Detay
-                  </Button>
-
-                  {p.repoUrl && (
-                    <a
-                      href={p.repoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="underline font-semibold"
-                    >
-                      Repo
-                    </a>
-                  )}
-                </div>
-              </article>
+              <ProjectCard key={p.id} project={p} onOpen={setActiveProjectId} />
             ))}
           </div>
 
